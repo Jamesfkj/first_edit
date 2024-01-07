@@ -1,0 +1,57 @@
+<?php
+$nom = $_POST['nom'];
+$prenom = $_POST['prenom'];
+
+// Insérer $nom et $prenom dans la base de données
+$stmt = $conn->prepare("INSERT INTO Civilite (Nom, Prenom) VALUES (:nom, :prenom)");
+$stmt->bindParam(':nom', $nom);
+$stmt->bindParam(':prenom', $prenom);
+$stmt->execute();
+?>
+------------------------------------------------------------------------
+<form action="insert.php" method="post">
+  Nom: <input type="text" name="nom"><br>
+  Prenom: <input type="text" name="prenom"><br>
+  <input type="submit">
+</form>
+------------------------------------------------------------------------
+
+-------------------------------------------------------------------------
+
+<form action="delete.php" method="post">
+  ID: <input type="text" name="id"><br>
+  <input type="submit" value="Supprimer">
+</form>
+---------------------------------------------------------------------------
+
+<?php
+$id = $_POST['id'];
+
+// Supprimer la ligne avec cet ID de la base de données
+$stmt = $conn->prepare("DELETE FROM Civilite WHERE id = :id");
+$stmt->bindParam(':id', $id);
+$stmt->execute();
+?>
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+// Sélectionner toutes les données de la table Civilite
+    $stmt = $conn->prepare("SELECT * FROM Civilite");
+    $stmt->execute();
+
+    // Récupérer toutes les lignes en tant que tableau associatif
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+ echo "<table border=3>";
+    echo "<tr><th>Nom</th><th>Prenom</th><th>Date_naiss</th><th>Sexe</th><th>Nationnalite</th></tr>";
+    foreach ($rows as $row) {
+        echo "<tr>";
+        echo "<td>" . $row['Nom'] . "</td>";
+        echo "<td>" . $row['Prenom'] . "</td>";
+        echo "<td>" . $row['Date_naiss'] . "</td>";
+        echo "<td>" . $row['Sexe'] . "</td>";
+        echo "<td>" . $row['Nationnalite'] . "</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+
