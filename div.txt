@@ -15,7 +15,7 @@ $stmt->execute();
   <input type="submit">
 </form>
 ------------------------------------------------------------------------
-
+J'ai juste réajouter du texte là
 -------------------------------------------------------------------------
 
 <form action="delete.php" method="post">
